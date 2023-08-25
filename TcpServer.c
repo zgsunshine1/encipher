@@ -7,11 +7,8 @@ int main(int argc, char** argv) {
 	char buf[MAXLINE];
 	int n;
 	
-
     initServerSocket(listenfd, severaddr);
-	
-	printf("=====Waiting for client's request===\n");
-	
+	const char request[] = "encipher";
 	while(1) {
 		if ((connfd = accept(listenfd, (struct sockaddr*)NULL, NULL)) == -1) {
 			printf("accept sever socket error: %s(errno: %d)\n", strerror(errno), errno);
@@ -20,10 +17,14 @@ int main(int argc, char** argv) {
 		
 		n = recv(connfd, buf, MAXLINE, 0);
 		buf[n] = '\n';
-		printf("receive message from clinet: %s\n", buf);
-		
-		close(connfd);
+		if(strcmp(buf, request))
+		{
+		   printf("generate key for clinet: %d\n", getCryptKey());
+		   //char msgbuffer[1000];
+		   int size = send(connfd, inputData, sizeof(inputData), 0);
+		}
 	}
+	close(connfd);
 	close(listenfd);
 	return 0;
 	
