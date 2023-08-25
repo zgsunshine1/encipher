@@ -11,6 +11,6 @@ client:TcpClient.o
 	g++ -g -o client TcpClient.o
 TcpClient.o:TcpClient.c
 	g++ -g -c TcpClient.c
-clean:all
-	rm all
+clean:
+	rm server client *.o 
 
