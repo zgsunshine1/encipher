@@ -20,12 +20,11 @@ int main(int argc, char** argv) {
 		if(strcmp(buf, request))
 		{
 		   printf("generate key for clinet: %d\n", getCryptKey());
-		   //char msgbuffer[1000];
-		   int size = send(connfd, inputData, sizeof(inputData), 0);
+		   encryptData(sendCipherData);
+		   int size = send(connfd, (const void*)&sendCipherData, sizeof(sendCipherData), 0);
 		}
 	}
 	close(connfd);
 	close(listenfd);
 	return 0;
-	
-}
+	}
