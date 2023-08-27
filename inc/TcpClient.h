@@ -32,4 +32,15 @@ int initClientSocket(int argc, char** argv, int* socketfd)
 	}
 	return 1;
 }
+
+void sendRequest(const int socketfd)
+{
+	char sendline[MAXLINE];
+	printf("send message to sever: \n");
+	fgets(sendline, MAXLINE, stdin);
+	
+	if (send(socketfd, sendline, strlen(sendline), 0) < 0) {
+		printf("send message error: %s(errno: %d)\n", strerror(errno), errno);
+	}	
+}
 #endif

@@ -11,6 +11,7 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<unistd.h>
+#include <stdbool.h>
 #include <time.h>
 uint8_t inputData[MAXVALUE] = {
 0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01,

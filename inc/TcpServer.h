@@ -27,4 +27,17 @@ int initServerSocket(int* listenfd, struct sockaddr_in* severaddr)
     printf("=====Waiting for client's request===\n");
 	return 1;
 }
+bool receiveData(const int connfd)
+{
+	int length;
+	char buf[MAXLINE];
+	const char request[] = "encipher";
+	length = recv(connfd, buf, MAXLINE, 0);
+	buf[length] = '\n';
+	if(strcmp(buf, request))
+	{
+		return true;
+	}
+	return false;	
+}
 #endif
