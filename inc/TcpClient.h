@@ -1,26 +1,17 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
-#define MAXLINE 4096
-#define MAXVALUE 20
-typedef struct decryptData 
-{
-   uint8_t encipherKey;
-   uint8_t receiveData[MAXVALUE];
-   uint32_t markFlag;
-}decryptData;
+#include "Algorithm.h"
 
-decryptData receiveData;
+Data receiveData;
 
 int initClientSocket(int argc, char** argv, int* socketfd)
 {
-   struct sockaddr_in severaddr;	// ip address of server
-	
+    struct sockaddr_in severaddr;
+
 	if (argc != 2) {
 		printf("usage: ./client <ipadress>\n");
 		return 0;
 	}
-
-	// socket init
 	if ((*socketfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		printf("create client socket error: %s(errno: %d)\n", strerror(errno), errno);
 		return 0;
@@ -39,5 +30,6 @@ int initClientSocket(int argc, char** argv, int* socketfd)
 		printf("connect error: %s(errno: %d)\n", strerror(errno), errno);
 		return 0;
 	}
+	return 1;
 }
 #endif
