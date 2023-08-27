@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
 	char buf[MAXLINE];
 	int n;
 	
-    initServerSocket(listenfd, severaddr);
+    initServerSocket(&listenfd, &severaddr);
 	const char request[] = "encipher";
 	while(1) {
 		if ((connfd = accept(listenfd, (struct sockaddr*)NULL, NULL)) == -1) {
@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 		if(strcmp(buf, request))
 		{
 		   printf("generate key for clinet: %d\n", getCryptKey());
-		   encryptData(sendCipherData);
+		   encryptData(&sendCipherData);
 		   int size = send(connfd, (const void*)&sendCipherData, sizeof(sendCipherData), 0);
 		}
 	}

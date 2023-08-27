@@ -19,14 +19,14 @@ uint8_t inputData[MAXVALUE] = {
 0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01,
 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76, 0xCA, 0x82, 0xC9, 0x7D};
 
-typedef struct encipherData 
+typedef struct EncipherData 
 {
    uint8_t encipherKey;
    uint8_t sendData[MAXVALUE];
    uint32_t markFlag;
-}encipherData;
+}EncipherData;
 
-encipherData sendCipherData;
+EncipherData sendCipherData;
 
 const uint8_t getCryptKey()
 {
@@ -36,49 +36,48 @@ const uint8_t getCryptKey()
     return key;
 }
 
-void encryptData(encipherData& sendCipherData)
+void encryptData(EncipherData* pSendCipherData)
 {
 	uint8_t encipherKey = getCryptKey();
 	uint8_t *pCipherData = inputData;
-	sendCipherData.encipherKey = encipherKey;
-	uint32_t &markFlag = sendCipherData.markFlag;
+	pSendCipherData->encipherKey = encipherKey;
 	for(int idx = 0; idx < MAXVALUE; ++idx)
 	{
         if (pCipherData[idx] > encipherKey)
 	    {
-			sendCipherData.sendData[idx] = pCipherData[idx] - encipherKey;
-			printf("origin idx = %d value1 = %d key = %d sendData = %d \n",idx, pCipherData[idx], encipherKey, sendCipherData.sendData[idx]);
+			pSendCipherData->sendData[idx] = pCipherData[idx] - encipherKey;
+			printf("origin idx = %d value1 = %d key = %d sendData = %d \n",idx, pCipherData[idx], encipherKey, pSendCipherData->sendData[idx]);
 		}
 		else
 		{
-			sendCipherData.sendData[idx] = pCipherData[idx] + encipherKey;
-            markFlag |= 1 << idx;
-			printf("origin idx = %d value2 = %d key = %d sendData = %d \n",idx, pCipherData[idx], encipherKey, sendCipherData.sendData[idx]);
+			pSendCipherData->sendData[idx] = pCipherData[idx] + encipherKey;
+            pSendCipherData->markFlag |= 1 << idx;
+			printf("origin idx = %d value2 = %d key = %d sendData = %d \n",idx, pCipherData[idx], encipherKey, pSendCipherData->sendData[idx]);
 		}
 	}
 }
 
-int initServerSocket(int& listenfd, struct sockaddr_in& severaddr)
+int initServerSocket(int* listenfd, struct sockaddr_in* severaddr)
 {
 	// socket init
-	if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+	if ((*listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		printf("create sever socket error: %s(errno: %d)\n", strerror(errno), errno);
 		return 0;
 	}
 	
-	memset(&severaddr, 0, sizeof(severaddr));
-	severaddr.sin_family = AF_INET;
-	severaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	severaddr.sin_port = htons(6666);
+	memset(severaddr, 0, sizeof(struct sockaddr_in));
+	severaddr->sin_family = AF_INET;
+	severaddr->sin_addr.s_addr = htonl(INADDR_ANY);
+	severaddr->sin_port = htons(6666);
 	
 	// bind socket id
-	if (bind(listenfd, (struct sockaddr*)&severaddr, sizeof(severaddr)) == -1) {
+	if (bind(*listenfd, severaddr, sizeof(*severaddr)) == -1) {
 		printf("bind sever socket error: %s(errno: %d)\n", strerror(errno), errno);
 		return 0;
 	}
 	
 	// linsten socket id
-	if (listen(listenfd, 10) == -1) {
+	if (listen(*listenfd, 10) == -1) {
 		printf("listen sever socket error: %s(errno: %d)\n", strerror(errno), errno);
 		return 0;
 	}

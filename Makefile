@@ -1,16 +1,22 @@
 CC = gcc
 CFLAGS = -g -Wall
-CLIBS = -lpthread -lssl -ldl -lcurses
 GTEST = -Igtest/include -Lgtest/lib -lgtest -lgtest_main
+SRC_DIRS = ./src/
+INC_DIRS = ./inc/
+TEST_DIRS = ./test/
+DIR_BIN = ./bin/
+OBJ_DIRS = ./obj/
+
 all:server client
 server:TcpServer.o
-	g++ -g -o server TcpServer.o
-TcpServer.o:TcpServer.c
-	g++ -g -c TcpServer.c
+	$(CC) $(CFLAGS) -o $(DIR_BIN)server TcpServer.o
+TcpServer.o:$(SRC_DIRS)TcpServer.c
+	$(CC) $(CFLAGS) -c $(SRC_DIRS)TcpServer.c -I $(INC_DIRS)
 client:TcpClient.o
-	g++ -g -o client TcpClient.o
-TcpClient.o:TcpClient.c
-	g++ -g -c TcpClient.c
+	$(CC) $(CFLAGS) -o $(DIR_BIN)client TcpClient.o
+TcpClient.o:$(SRC_DIRS)TcpClient.c
+	$(CC) $(CFLAGS) -c $(SRC_DIRS)TcpClient.c -I $(INC_DIRS)
+.PHONY:
 clean:
-	rm server client *.o 
+	rm $(DIR_BIN)* *.o
 
