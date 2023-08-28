@@ -49,13 +49,13 @@ void encryptData(Data* pData, uint8_t *recData)
         if (pCipherData[idx] > encipherKey)
 	    {
 			pData->transmitData[idx] = pCipherData[idx] - encipherKey;
-			printf("origin idx = %d value1 = %d key = %d transmitData = %d \n",idx, pCipherData[idx], encipherKey, pData->transmitData[idx]);
+			printf("subtract idx = %d value1 = %d key = %d transmitData = %d \n",idx, pCipherData[idx], encipherKey, pData->transmitData[idx]);
 		}
 		else
 		{
 			pData->transmitData[idx] = pCipherData[idx] + encipherKey;
             pData->markFlag |= 1 << idx;
-			printf("origin idx = %d value2 = %d key = %d transmitData = %d \n",idx, pCipherData[idx], encipherKey, pData->transmitData[idx]);
+			printf("plus idx = %d value2 = %d key = %d transmitData = %d \n",idx, pCipherData[idx], encipherKey, pData->transmitData[idx]);
 		}
 	}
 }
@@ -75,7 +75,7 @@ void decryptData(Data* pData)
 	   {
 		 pData->transmitData[idx] += pData->encipherKey;
 	   }
-	   printf("transmitData %d idx %d\n", pData->transmitData[idx], idx);
+	   printf("original Data %d idx %d\n", pData->transmitData[idx], idx);
 	}
 }
 
