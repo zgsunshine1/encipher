@@ -13,7 +13,8 @@ int main(int argc, char** argv) {
 		}
         if (mappingEncipherReq(connfd, &sendCipherData))
 		{
-		   printf("generate key for clinet: %d\n", getCryptKey());
+		   sendCipherData.encipherKey = getCryptKey();
+		   printf("generate key for clinet: %d\n", sendCipherData.encipherKey);
 		   encryptData(&sendCipherData, inputData);
 		   exchangeEncryptData(&sendCipherData);
 		   send(connfd, (const void*)&sendCipherData, sizeof(sendCipherData), 0);

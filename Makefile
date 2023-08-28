@@ -17,8 +17,8 @@ client:TcpClient.o
 	$(CC) $(CFLAGS) -o $(DIR_BIN)client TcpClient.o
 TcpClient.o:$(SRC_DIRS)TcpClient.c
 	$(CC) $(CFLAGS) -c $(SRC_DIRS)TcpClient.c -I $(INC_DIRS)
-TestAlgorithem:
-	$(GPLUSPLUS) $(CFLAGS) $(TEST_DIRS)TestAlgorithem.c -o $(DIR_BIN)TestAlgorithem -I$(INC_DIRS) $(GTEST)
+TestAlgorithm:
+	$(GPLUSPLUS) $(CFLAGS) $(TEST_DIRS)TestAlgorithm.c -o $(DIR_BIN)TestAlgorithm -I$(INC_DIRS) $(GTEST)
 .PHONY:
 clean:
 	rm $(DIR_BIN)* *.o

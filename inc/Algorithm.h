@@ -49,9 +49,8 @@ const uint8_t getCryptKey()
 
 void encryptData(Data* pData, uint8_t *recData)
 {
-	uint8_t encipherKey = getCryptKey();
+	uint8_t encipherKey = pData->encipherKey;
 	uint8_t *pCipherData = recData;
-	pData->encipherKey = encipherKey;
 	for(int idx = 0; idx < MAXVALUE; ++idx)
 	{
         if (pCipherData[idx] > encipherKey)
