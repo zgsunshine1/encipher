@@ -1,7 +1,5 @@
 #ifndef ALGORITHM_H
 #define ALGORITHM_H
-#define MAXLINE 4096
-#define MAXVALUE 20
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -13,9 +11,18 @@
 #include<unistd.h>
 #include <stdbool.h>
 #include <time.h>
+#define MAXLINE 10
+#define MAXVALUE 20
+const char request[] = "encipher";
 uint8_t inputData[MAXVALUE] = {
 0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01,
 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76, 0xCA, 0x82, 0xC9, 0x7D};
+
+typedef struct EncipherMethod
+{
+	char method[MAXLINE];
+	uint8_t encipherNum;
+}EncipherMethod;
 
 typedef struct Data 
 {
@@ -32,10 +39,10 @@ const uint8_t getCryptKey()
     return key;
 }
 
-void encryptData(Data* pData)
+void encryptData(Data* pData, uint8_t *recData)
 {
 	uint8_t encipherKey = getCryptKey();
-	uint8_t *pCipherData = inputData;
+	uint8_t *pCipherData = recData;
 	pData->encipherKey = encipherKey;
 	for(int idx = 0; idx < MAXVALUE; ++idx)
 	{

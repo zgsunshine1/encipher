@@ -27,14 +27,13 @@ int initServerSocket(int* listenfd, struct sockaddr_in* severaddr)
     printf("=====Waiting for client's request===\n");
 	return 1;
 }
-bool receiveData(const int connfd)
+bool mappingEncipherReq(const int connfd)
 {
-	int length;
-	char buf[MAXLINE];
-	const char request[] = "encipher";
-	length = recv(connfd, buf, MAXLINE, 0);
-	buf[length] = '\n';
-	if(strcmp(buf, request))
+	EncipherMethod encipher;
+	recv(connfd, (void *)&encipher, sizeof(EncipherMethod), 0);
+	printf("recieve method %s\n",encipher.method);
+	printf("recieve encipherNum %hhu\n",encipher.encipherNum);
+	if(strcmp(encipher.method, request))
 	{
 		return true;
 	}

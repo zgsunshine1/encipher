@@ -35,12 +35,29 @@ int initClientSocket(int argc, char** argv, int* socketfd)
 
 void sendRequest(const int socketfd)
 {
-	char sendline[MAXLINE];
-	printf("send message to sever: \n");
-	fgets(sendline, MAXLINE, stdin);
-	
-	if (send(socketfd, sendline, strlen(sendline), 0) < 0) {
+	EncipherMethod encipher;
+    while(1)
+	{
+        printf("please input encipher method: \n");
+	    fgets(encipher.method, MAXLINE, stdin);
+		if(strcmp(encipher.method, request))
+		{
+			break;
+		}
+	};
+
+	while (1)
+	{
+		printf("please input encipher number: %d\n", encipher.encipherNum);
+		scanf("%hhu", &encipher.encipherNum);
+		if( 0 < encipher.encipherNum && encipher.encipherNum < 10)
+		{
+			break;			
+		}
+	};
+	if (send(socketfd, (const void*)&encipher, sizeof(EncipherMethod), 0) < 0) 
+	{
 		printf("send message error: %s(errno: %d)\n", strerror(errno), errno);
-	}	
+	}
 }
 #endif

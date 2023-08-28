@@ -11,11 +11,11 @@ int main(int argc, char** argv) {
 			printf("accept sever socket error: %s(errno: %d)\n", strerror(errno), errno);
 			return 0;
 		}
-        if (receiveData(connfd))
+        if (mappingEncipherReq(connfd))
 		{
 		   printf("generate key for clinet: %d\n", getCryptKey());
 		   Data sendCipherData;
-		   encryptData(&sendCipherData);
+		   encryptData(&sendCipherData, inputData);
 		   send(connfd, (const void*)&sendCipherData, sizeof(sendCipherData), 0);
 		}
 	}
