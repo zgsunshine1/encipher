@@ -7,6 +7,7 @@ int main(int argc, char** argv) {
       sendRequest(socketfd);
 	  Data receiveDecryptData;
 	  recv(socketfd, (void *)&receiveDecryptData, sizeof(Data), 0);
+	  exchangeEncryptData(&receiveDecryptData);
       decryptData(&receiveDecryptData);
 	}
 	close(socketfd);

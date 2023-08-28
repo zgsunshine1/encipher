@@ -12,7 +12,7 @@
 #include <stdbool.h>
 #include <time.h>
 #define MAXLINE 10
-#define MAXVALUE 20
+#define MAXVALUE 30
 const char request[] = "encipher";
 uint8_t inputData[MAXVALUE] = {
 0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01,
@@ -35,8 +35,15 @@ typedef struct Data
 const uint8_t getCryptKey()
 {
 	srand(time(NULL));
-    uint8_t key = rand() % 10;
-    printf("value=%d\n",key);
+	uint8_t key;
+	while (1)
+	{
+       key = rand() % 10;
+	  if (0 != key)
+	  {
+		break;
+	  }
+	};
     return key;
 }
 
@@ -70,20 +77,24 @@ void exchangeEncryptData(Data* pData)
    }
    else
    {
-	 uint8_t *pExchangeData = NULL;
 	 uint8_t totolLength = 0;
 	 uint8_t arrayLength = sizeof(pData->transmitData) / sizeof(pData->transmitData[0]);
 	 uint8_t encipherNum = pData->encipherNum;
 	 if (arrayLength % encipherNum)
 	 {
 		totolLength = (arrayLength/encipherNum + 1) * encipherNum;
-	    pExchangeData = malloc( totolLength * sizeof(pData->transmitData[0]));
 	 }
 	 else
 	 {
 		totolLength = arrayLength;
-		pExchangeData = malloc(arrayLength * sizeof(pData->transmitData[0]));
 	 }
+	 uint8_t *pExchangeData = malloc(totolLength * sizeof(pData->transmitData[0]));
+	 if (NULL == pExchangeData)
+	 {
+        printf("malloc failed");
+		return;
+	 }
+	 memset(pExchangeData, 0, sizeof(pData->transmitData[0]) * totolLength);
 	 for (int i = 0; i < totolLength; )
 	 {
 		for (int j = 0; j < encipherNum; j++)
