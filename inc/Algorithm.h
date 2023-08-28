@@ -88,7 +88,7 @@ void exchangeEncryptData(Data* pData)
 	 {
 		totolLength = arrayLength;
 	 }
-	 uint8_t *pExchangeData = malloc(totolLength * sizeof(pData->transmitData[0]));
+	 uint8_t *pExchangeData = (uint8_t *)malloc(totolLength * sizeof(pData->transmitData[0]));
 	 if (NULL == pExchangeData)
 	 {
         printf("malloc failed");
