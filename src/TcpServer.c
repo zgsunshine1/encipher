@@ -5,17 +5,17 @@ int main(int argc, char** argv) {
 	struct sockaddr_in severaddr;	// ip address of server
 	
     initServerSocket(&listenfd, &severaddr);
-
+	Data sendCipherData;
 	while(1) {
 		if ((connfd = accept(listenfd, (struct sockaddr*)NULL, NULL)) == -1) {
 			printf("accept sever socket error: %s(errno: %d)\n", strerror(errno), errno);
 			return 0;
 		}
-        if (mappingEncipherReq(connfd))
+        if (mappingEncipherReq(connfd, &sendCipherData))
 		{
 		   printf("generate key for clinet: %d\n", getCryptKey());
-		   Data sendCipherData;
 		   encryptData(&sendCipherData, inputData);
+		   exchangeEncryptData(&sendCipherData);
 		   send(connfd, (const void*)&sendCipherData, sizeof(sendCipherData), 0);
 		}
 	}

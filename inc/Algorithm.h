@@ -27,6 +27,7 @@ typedef struct EncipherMethod
 typedef struct Data 
 {
    uint8_t encipherKey;
+   uint8_t encipherNum;
    uint8_t transmitData[MAXVALUE];
    uint32_t markFlag;
 }Data;
@@ -59,6 +60,50 @@ void encryptData(Data* pData, uint8_t *recData)
 		}
 	}
 }
+
+void exchangeEncryptData(Data* pData)
+{
+   uint8_t encipherNum = pData->encipherNum;
+   if (encipherNum <= 1)
+   {
+	 return;
+   }
+   else
+   {
+	 uint8_t *pExchangeData = NULL;
+	 uint8_t totolLength = 0;
+	 uint8_t arrayLength = sizeof(pData->transmitData) / sizeof(pData->transmitData[0]);
+	 uint8_t encipherNum = pData->encipherNum;
+	 if (arrayLength % encipherNum)
+	 {
+		totolLength = (arrayLength/encipherNum + 1) * encipherNum;
+	    pExchangeData = malloc( totolLength * sizeof(pData->transmitData[0]));
+	 }
+	 else
+	 {
+		totolLength = arrayLength;
+		pExchangeData = malloc(arrayLength * sizeof(pData->transmitData[0]));
+	 }
+	 for (int i = 0; i < totolLength; )
+	 {
+		for (int j = 0; j < encipherNum; j++)
+		{
+			pExchangeData[i + j] = pData->transmitData[i+ encipherNum -1 - j];
+			printf("exchangeEncryptData idx = %d transmitData = %d \n",i + j, pExchangeData[i + j]);
+		}
+		i+= encipherNum;
+	 }
+	 for (int i = 0; i < totolLength; i++)
+	 {
+	   pData->transmitData[i] = pExchangeData[i];
+	 }
+ 
+     free(pExchangeData);
+	 pExchangeData = NULL;
+   }
+   return;
+}
+
 void decryptData(Data* pData)
 {
     int size = sizeof(pData->transmitData);
