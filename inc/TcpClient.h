@@ -48,7 +48,7 @@ void sendRequest(const int socketfd)
 
 	while (1)
 	{
-		printf("please input encipher number: %d\n", encipher.encipherNum);
+		printf("please input encipher number\n");
 		scanf("%hhu", &encipher.encipherNum);
 		if( 0 < encipher.encipherNum && encipher.encipherNum < 10)
 		{
@@ -59,5 +59,17 @@ void sendRequest(const int socketfd)
 	{
 		printf("send message error: %s(errno: %d)\n", strerror(errno), errno);
 	}
+}
+
+void sendData(const int socketfd, Data* data)
+{
+	if (send(socketfd, (const void*)data, sizeof(Data), 0) < 0) 
+	{
+		printf("send data error: %s(errno: %d)\n", strerror(errno), errno);
+	}
+	  for(int i =0; i< MAXVALUE; i++)
+	  {
+		printf("encipherKey %d, encipherNum %d transmitData %d markFlag%d \n", data->encipherKey,data->encipherNum, data->transmitData[i], data->markFlag);
+	  }
 }
 #endif

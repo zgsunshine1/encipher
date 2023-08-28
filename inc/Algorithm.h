@@ -47,22 +47,23 @@ const uint8_t getCryptKey()
     return key;
 }
 
-void encryptData(Data* pData, uint8_t *recData)
+void encryptData(Data* pData)
 {
 	uint8_t encipherKey = pData->encipherKey;
-	uint8_t *pCipherData = recData;
 	for(int idx = 0; idx < MAXVALUE; ++idx)
 	{
-        if (pCipherData[idx] > encipherKey)
+        if (pData->transmitData[idx] > encipherKey)
 	    {
-			pData->transmitData[idx] = pCipherData[idx] - encipherKey;
-			printf("subtract idx = %d value1 = %d key = %d transmitData = %d \n",idx, pCipherData[idx], encipherKey, pData->transmitData[idx]);
+			printf("subtract idx = %d key = %d transmitData = %d",idx, encipherKey, pData->transmitData[idx]);
+			pData->transmitData[idx] -= encipherKey;
+			printf("transmitData1 = %d \n", pData->transmitData[idx]);
 		}
 		else
 		{
-			pData->transmitData[idx] = pCipherData[idx] + encipherKey;
+			printf("plus idx = %d key = %d transmitData = %d",idx, encipherKey, pData->transmitData[idx]);
+			pData->transmitData[idx] += encipherKey;
             pData->markFlag |= 1 << idx;
-			printf("plus idx = %d value2 = %d key = %d transmitData = %d \n",idx, pCipherData[idx], encipherKey, pData->transmitData[idx]);
+			printf("transmitData1 = %d markFlag=%d\n", pData->transmitData[idx], pData->markFlag);
 		}
 	}
 }

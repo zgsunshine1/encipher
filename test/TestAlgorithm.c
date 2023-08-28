@@ -6,7 +6,8 @@ TEST(Algorithm__Test, GiveEncipherMethodAndData_WhenEnciperSuccess_ThenCheckResu
     Data cipherData;
     cipherData.encipherKey = 7;
     cipherData.encipherNum = 1;
-    encryptData(&cipherData, inputData);
+    memcpy(cipherData.transmitData, inputData, sizeof(inputData));
+    encryptData(&cipherData);
     uint8_t expectData[MAXVALUE] = {
     92, 117, 112, 116, 235, 100, 104, 190, 41, 8,
     96, 36, 247, 208, 164, 111, 195, 123, 194, 118, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
@@ -22,7 +23,8 @@ TEST(Algorithm__Test, GiveEncipherMethodAndData_WhenDecryptSuccess_ThenCheckResu
     Data cipherData;
     cipherData.encipherKey = 3;
     cipherData.markFlag = 0;
-    encryptData(&cipherData, inputData);
+    memcpy(cipherData.transmitData, inputData, sizeof(inputData));
+    encryptData(&cipherData);
     decryptData(&cipherData);
     for (int i = 0; i < MAXVALUE; ++i)
     {
@@ -38,7 +40,8 @@ TEST(Algorithm__Test, GiveEncipherMethodAndData_WhenExchageEncipherSuccess_ThenC
     cipherData.markFlag = 0;
     cipherData.encipherNum = 6;
     memset(cipherData.transmitData, 0, sizeof(cipherData.transmitData));
-    encryptData(&cipherData, inputData);
+    memcpy(cipherData.transmitData, inputData, sizeof(inputData));
+    encryptData(&cipherData);
     exchangeEncryptData(&cipherData);
     uint8_t expectData[MAXVALUE] = {
     102, 237, 118, 114, 119, 94, 

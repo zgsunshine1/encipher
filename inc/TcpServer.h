@@ -40,4 +40,13 @@ bool mappingEncipherReq(const int connfd, Data* pData)
 	}
 	return false;	
 }
+
+bool recieveClientData(const int connfd, Data* pData)
+{
+	recv(connfd, (void *)pData, sizeof(Data), 0);
+	encryptData(pData);
+	exchangeEncryptData(pData);
+	send(connfd, (const void*)pData, sizeof(Data), 0);
+	return true;	
+}
 #endif
