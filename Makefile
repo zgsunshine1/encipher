@@ -8,18 +8,17 @@ TEST_DIRS = ./test/
 DIR_BIN = ./bin/
 OBJ_DIRS = ./obj/
 
-all:server client
-server:TcpServer.o
-	$(CC) $(CFLAGS) -o $(DIR_BIN)server TcpServer.o
-TcpServer.o:$(SRC_DIRS)TcpServer.c
-	$(CC) $(CFLAGS) -c $(SRC_DIRS)TcpServer.c -I $(INC_DIRS)
-client:TcpClient.o
-	$(CC) $(CFLAGS) -o $(DIR_BIN)client TcpClient.o
-TcpClient.o:$(SRC_DIRS)TcpClient.c
-	$(CC) $(CFLAGS) -c $(SRC_DIRS)TcpClient.c -I $(INC_DIRS)
+all:server client operateFile
+server:
+	$(CC) $(CFLAGS) -o $(DIR_BIN)server $(SRC_DIRS)TcpServer.c -I $(INC_DIRS)
+client:
+	$(CC) $(CFLAGS) -o $(DIR_BIN)client $(SRC_DIRS)TcpClient.c -I $(INC_DIRS)
+operateFile:
+	$(CC) $(CFLAGS) -o $(DIR_BIN)operateFile $(SRC_DIRS)FileOperation.c -I $(INC_DIRS)
 TestAlgorithm:
 	$(GPLUSPLUS) $(CFLAGS) $(TEST_DIRS)TestAlgorithm.c -o $(DIR_BIN)TestAlgorithm -I$(INC_DIRS) $(GTEST)
+
 .PHONY:
 clean:
-	rm $(DIR_BIN)* *.o
+	rm $(DIR_BIN)*
 
