@@ -14,7 +14,7 @@ server:
 client:
 	$(CC) $(CFLAGS) -o $(DIR_BIN)client $(SRC_DIRS)TcpClient.c -I $(INC_DIRS)
 operateFile:
-	$(CC) $(CFLAGS) -o $(DIR_BIN)operateFile $(SRC_DIRS)FileOperation.c -I $(INC_DIRS)
+	$(CC) $(CFLAGS) -o $(DIR_BIN)operateFile $(SRC_DIRS)FileOperation.c $(SRC_DIRS)cJSON.c -I $(INC_DIRS)
 TestAlgorithm:
 	$(GPLUSPLUS) $(CFLAGS) $(TEST_DIRS)TestAlgorithm.c -o $(DIR_BIN)TestAlgorithm -I$(INC_DIRS) $(GTEST)
 

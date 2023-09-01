@@ -1,0 +1,17 @@
+{
+	"listBook":	3,
+	"book":	"human",
+	"author":	"angle",
+	"books":	[{
+			"name":	"math",
+			"type":	"123"
+		}, {
+			"name":	"english",
+			"type":	"456"
+		}],
+	"sem":	{
+		"slots":	{
+			"name":	"lingyang"
+		}
+	}
+}

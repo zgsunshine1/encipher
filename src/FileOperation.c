@@ -1,7 +1,8 @@
 #include "FileOperation.h"
 int main()
 {
-   writeFile();
-   readFile();
+   writeBinaryFile();
+   readBinaryFile();
+   writeJsonFile();
    return 0;
 }

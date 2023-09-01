@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
       sendRequest(socketfd);
 	  Data data;
 	  recv(socketfd, (void *)&data, sizeof(Data), 0);
-	  printf("encipherKey %d", data.encipherKey);
+	  printf("encipherKey %d\n", data.encipherKey);
 	  memcpy(data.transmitData, inputData, sizeof(inputData));
 
 	  sendData(socketfd, &data);
