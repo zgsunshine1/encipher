@@ -6,6 +6,7 @@ int main(int argc, char** argv) {
 	
     initServerSocket(&listenfd, &severaddr);
 	Data sendCipherData;
+	memset(&sendCipherData, 0, sizeof(Data));
 	while(1) {
 		if ((connfd = accept(listenfd, (struct sockaddr*)NULL, NULL)) == -1) {
 			printf("accept sever socket error: %s(errno: %d)\n", strerror(errno), errno);
