@@ -2,6 +2,7 @@ CC = gcc
 GPLUSPLUS = g++
 CFLAGS = -g -Wall
 GTEST = -Igtest/include -Lgtest/lib -lgtest -lgtest_main
+CMOCKATEST = -lcmocka
 SRC_DIRS = ./src/
 INC_DIRS = ./inc/
 TEST_DIRS = ./test/
@@ -17,7 +18,8 @@ operateFile:
 	$(CC) $(CFLAGS) -o $(DIR_BIN)operateFile $(SRC_DIRS)FileOperation.c $(SRC_DIRS)cJSON.c -I $(INC_DIRS)
 TestAlgorithm:
 	$(GPLUSPLUS) $(CFLAGS) $(TEST_DIRS)TestAlgorithm.c -o $(DIR_BIN)TestAlgorithm -I$(INC_DIRS) $(GTEST)
-
+TestAlgorithm_sample:
+	$(CC) $(CFLAGS) $(TEST_DIRS)TestAlgorithm_simple.c -o $(DIR_BIN)TestAlgorithm_sample -I$(INC_DIRS) $(CMOCKATEST)
 .PHONY:
 clean:
 	rm $(DIR_BIN)*
