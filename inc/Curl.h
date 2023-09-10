@@ -31,3 +31,25 @@ bool getUrl(char *filename)
         }
         return true;
 }
+
+bool postUrl(char *filename)
+{
+    CURL *curl;
+    CURLcode res;
+    FILE *fp;
+    if ((fp = fopen(filename, "w")) == NULL)
+        return false;
+    curl = curl_easy_init();
+    if (curl)
+    {
+        curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "./bing.html"); // 指定cookie文件
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "&logintype=uid&u=zhuguang&psw=123456");    // 指定post内容
+        //curl_easy_setopt(curl, CURLOPT_PROXY, "10.99.60.201:8080");
+        curl_easy_setopt(curl, CURLOPT_URL, " http://mail.sina.com.cn/cgi-bin/login.cgi ");   // 指定url
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+    }
+    fclose(fp);
+    return true;
+}
