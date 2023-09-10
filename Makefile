@@ -19,7 +19,7 @@ client:
 operateFile:
 	$(CC) $(CFLAGS) -o $(DIR_BIN)operateFile $(SRC_DIRS)FileOperation.c $(SRC_DIRS)cJSON.c -I $(INC_DIRS)
 useCurl:
-	$(CC) $(CFLAGS) -o $(DIR_BIN)useCurl $(SRC_DIRS)Curl.c -I $(CURL_DIRS) -L $(CURL_LIBDIRS) $(CURL_LIB)
+	$(CC) $(CFLAGS) -o $(DIR_BIN)useCurl $(SRC_DIRS)Curl.c -I $(CURL_DIRS) -I $(INC_DIRS)  -L $(CURL_LIBDIRS) $(CURL_LIB)
 TestAlgorithm:
 	$(GPLUSPLUS) $(CFLAGS) $(TEST_DIRS)TestAlgorithm.c -o $(DIR_BIN)TestAlgorithm -I$(INC_DIRS) $(GTEST)
 TestAlgorithm_sample:
